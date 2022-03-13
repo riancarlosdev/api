@@ -5,7 +5,7 @@ interface bodyUser {
   data_nascimento: string
   cpf: string
   senha: string
-  confirm_senha: string 
+  confirm_senha: string
 }
 
-export { bodyUser }
+export { bodyUser };

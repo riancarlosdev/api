@@ -1,3 +1,6 @@
-import App from "./app"
+import { config } from 'dotenv';
+import App from './app';
 
-new App().initialServer(false)
+config();
+
+new App().initialServer(false);
