@@ -54,6 +54,8 @@ export default function valideRegisterUser() {
     body('cpf').isLength({ max: 15, min: 14 }).notEmpty(),
     body('senha').isLength({ max: 16, min: 6 }).notEmpty(),
     body('confirm_senha').isLength({ max: 16, min: 6 }).notEmpty(),
+    body('telefone').isLength({ max: 13, min: 10 }),
+    body('whatsapp').isLength({ max: 13, min: 9 }),
   ];
 
   return { expressBody, valideCampos };

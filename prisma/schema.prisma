@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model enderecos {
+  id            Int      @id
+  identificacao String   @db.VarChar(15)
+  cep           Int
+  rua           String   @db.VarChar(25)
+  numero        Int
+  referencia    String   @db.VarChar(40)
+  complemento   String?  @db.VarChar(170)
+  estado        String   @db.VarChar(20)
+  cidade        String   @db.VarChar(20)
+  bairro        String   @db.VarChar(45)
+  usuarioId     Int
+  usuarios      usuarios @relation(fields: [usuarioId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_endereco_usuario")
+
+  @@index([usuarioId], map: "fk_endereco_usuario_idx")
+}
+
+model usuarios {
+  id          Int             @id @default(autoincrement())
+  nome        String          @db.VarChar(14)
+  sobrenome   String          @db.VarChar(14)
+  nascimento  String          @db.VarChar(11)
+  email       String          @db.VarChar(250)
+  cpf         String          @db.VarChar(11)
+  senha       String          @db.VarChar(130)
+  telefone    String?         @db.VarChar(12)
+  whatsapp    String?         @db.VarChar(13)
+  status      usuarios_status @default(PEND)
+  codeConfirm Int?
+  enderecos   enderecos[]
+}
+
+model genero {
+  id       Int        @id @default(autoincrement())
+  nome     String     @db.VarChar(12)
+  produtos produtos[]
+}
+
+model produtos {
+  id           Int      @id @default(autoincrement())
+  nome         String   @db.VarChar(30)
+  descricao    String   @db.VarChar(50)
+  qnt_estoque  Int
+  disponivel   Int      @db.TinyInt
+  preco        Decimal  @db.Decimal(5, 2)
+  preco_antigo Decimal? @db.Decimal(5, 2)
+  tamanhos     String?  @db.VarChar(250)
+  cores        String?  @db.VarChar(250)
+  genero_id    Int
+  genero       genero   @relation(fields: [genero_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_produtos_genero1")
+
+  @@index([genero_id], map: "fk_produtos_genero1_idx")
+}
+
+enum usuarios_status {
+  OK
+  PEND
+}

@@ -22,5 +22,6 @@ module.exports = {
     'consistent-return': 'off',
     'import/prefer-default-export': 'off',
     'no-undef': 'off',
+    'no-shadow': 'off',
   },
 };

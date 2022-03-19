@@ -6,6 +6,8 @@ interface bodyUser {
   cpf: string
   senha: string
   confirm_senha: string
+  telefone?: string
+  whatsapp?: string
 }
 
 export { bodyUser };
